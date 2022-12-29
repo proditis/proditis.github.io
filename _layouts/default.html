@@ -27,9 +27,9 @@
           </div>
 
           <nav>
-            <a href="{{ site.baseurl }}/blog/">Blog</a>
-            <a href="{{ site.baseurl }}/thoughts/">Thoughts</a>
-            <a href="{{ site.baseurl }}/research/">Research</a>
+            {% for category in site.categories %}
+            <a href="{{category.url}}"><strong>{{category|first}}</strong></a></li>
+            {% endfor %}
             <a href="{{ site.baseurl }}/BugBounty-Journal/" target="_blank">My BugBounty Journal</a>
             <a href="https://proditis.gitbook.io/ctfdev/" target="_blank">CTFdev</a>
             <a href="{{ site.baseurl }}/about">About</a>
