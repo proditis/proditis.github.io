@@ -31,7 +31,7 @@ kramdown:
 sass:
   style: :expanded # You might prefer to minify using :compressed
 
-safe: false
+safe: true
 plugins:
   - jekyll-sitemap
   - jekyll-feed
