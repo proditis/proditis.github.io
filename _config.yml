@@ -48,6 +48,7 @@ toc:
  sublist_class: toc__sublist
 
 exclude:
+  - vendor
   - Gemfile
   - Gemfile.lock
   - LICENSE
