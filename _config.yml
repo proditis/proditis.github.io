@@ -12,13 +12,6 @@ url: https://proditis.github.io
 baseurl: ""
 permalink: /:categories/:title/
 show_downloads: false
-github:
-  is_project_page: false
-defaults:
-  - scope:
-      path: ""
-    values:
-      image: /images/blacksheep-social.png
 
 collections:
   research:
