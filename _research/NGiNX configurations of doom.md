@@ -448,8 +448,8 @@ header('Location: http://unix:/tmp/somehttp.sock:/', true, 301);
 
 
 ## References
-* https://portswigger.net/daily-swig/nginx-server-misconfigurations-found-in-the-wild-that-expose-websites-to-attacks
-* https://blog.detectify.com/2020/11/10/common-nginx-misconfigurations/
-* https://labs.detectify.com/2021/02/18/middleware-middleware-everywhere-and-lots-of-misconfigurations-to-fix/
-* https://github.com/yandex/gixy
-* https://book.hacktricks.xyz/pentesting/pentesting-web/nginx
+* <https://portswigger.net/daily-swig/nginx-server-misconfigurations-found-in-the-wild-that-expose-websites-to-attacks>
+* <https://blog.detectify.com/2020/11/10/common-nginx-misconfigurations/>
+* <https://labs.detectify.com/2021/02/18/middleware-middleware-everywhere-and-lots-of-misconfigurations-to-fix/>
+* <https://github.com/yandex/gixy>
+* <https://book.hacktricks.xyz/pentesting/pentesting-web/nginx>
