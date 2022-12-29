@@ -11,14 +11,14 @@ footer-links:
 url: https://proditis.github.io
 baseurl: ""
 permalink: /:categories/:title/
+#include:
+#  - research
+#  - thoughts
+
 collections:
   research:
-    label: "Research"
-    relative_directory: "research"
     output: true
   thoughts:
-    label: "Thoughts"
-    relative_directory: "thoughts/"
     output: true
 
 version: v1.2.0
@@ -32,7 +32,7 @@ sass:
   style: :expanded # You might prefer to minify using :compressed
 
 gems:
-  - jekyll-sitemap
+#  - jekyll-sitemap
   - jekyll-feed
 
 exclude:

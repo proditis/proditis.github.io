@@ -11,7 +11,6 @@ tags:
   - hacking
 ---
 
-# NGiNX configurations of doom
 This document will serve as the log for researching various NGiNX configurations, how they can be avoided and how they can me leveraged from an offensive security standpoint -- and in the mean time maybe create a couple of targets for echoCTF.RED 😆
 
 

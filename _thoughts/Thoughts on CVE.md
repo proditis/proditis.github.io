@@ -10,8 +10,6 @@ tags:
   - thoughts
 ---
 
-# Thoughts on CVE
-
 These are some thoughts on the subject of CVE's that arose by observing new high severity CVE's being assigned to applications almost nobody uses.
 
 This is still not formalized completely as i like it to be but the gist of it goes like this.
