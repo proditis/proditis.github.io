@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: post
 title: Thoughts on CVE
 category: thoughts
 date: 17/04/2022
