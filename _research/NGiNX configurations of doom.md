@@ -268,11 +268,11 @@ Some frameworks, scripts and Nginx configurations unsafely use the variables sto
 
 With a configuration such as the following:
 ```nginx
-        location ~ \\.php$ {
-                include fastcgi_params;
-                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-                fastcgi_pass 127.0.0.1:9000;
-        }
+location ~ \\.php$ {
+    include fastcgi_params;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_pass 127.0.0.1:9000;
+}
 ```
 The main issue will be that Nginx will send any URL to the PHP interpreter ending in `.php` even if the file doesn’t exist on disc. This is a common mistake in many Nginx configurations, as outlined in the “[Pitfalls and Common Mistakes](https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/#passing-uncontrolled-requests-to-php)” document created by Nginx.
 
@@ -443,7 +443,7 @@ location @405 {
 
 ```php
 <?
-header('Location: http://unix:/tmp/redis.sock:\\'return (table.concat(redis.call("config","get","\*"),"\\n").." HTTP/1.1 200 OK\\r\\n\\r\\n")\\' 1 ', true, 301);
+header('Location: http://unix:/tmp/somehttp.sock:/', true, 301);
 ```
 
 
