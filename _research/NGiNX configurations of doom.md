@@ -152,6 +152,7 @@ Host: bucket.s3.amazonaws.com
 
 ## Problems with referrer/origin validation
 [[origins] Problems with referrer/origin validation](https://github.com/yandex/gixy/blob/master/docs/en/plugins/origins.md)
+
 ### none in valid_referers
 [[valid_referers] none in valid_referers](https://github.com/yandex/gixy/blob/master/docs/en/plugins/validreferers.md)
 
@@ -186,7 +187,7 @@ server {
     }
 }
 ```
-### Multiple `HOST` headers
+## Multiple `HOST` headers
 NGiNX between v0.7.0 ~ v1.20 has had the silly idea to allow 2 `HOST` headers to be given on a request, due to a bug that existed in some java VM implementations on mobile phones, which was causing this behaviour. So as a temporary fix they allowed two `HOST` to be accepted.
 
 However, this "logic" was not propagated across the code base and led to problems in a lot of different areas. NGiNX performs any validations and checks only on the first `HOST` header and sets the internal `http_host` variable to the **second**!!! Similarly, all exported variables passed to backend application servers (eg wsgi, fastcgi etc) are being overwritten by the second host. In some cases this can lead to cache poisoning, code injections and more.
