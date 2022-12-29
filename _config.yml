@@ -10,7 +10,7 @@ footer-links:
 #google_analytics:
 url: https://proditis.github.io
 baseurl: ""
-permalink: /:title/
+#permalink: /:title/
 version: v1.2.0
 kramdown:
   input: GFM
