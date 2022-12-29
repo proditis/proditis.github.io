@@ -1,6 +1,7 @@
 ---
 layout: post
 title: NGiNX configurations of doom
+category: research
 date: 23/11/2021
 tags:
   - WIP
