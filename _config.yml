@@ -35,7 +35,15 @@ plugins:
   - jekyll-sitemap
   - jekyll-feed
   - jekyll-toc
+  - jekyll-gist
+  - jekyll-coffeescript
+  - jekyll-seo-tag
 
+whitelist:
+  - jekyll-toc
+  - jekyll-gist
+  - jekyll-coffeescript
+  - jekyll-seo-tag
 toc:
  min_level: 1
  max_level: 3
