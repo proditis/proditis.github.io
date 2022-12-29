@@ -10,11 +10,15 @@ footer-links:
 #google_analytics:
 url: https://proditis.github.io
 baseurl: ""
-#permalink: /:title/
+permalink: /:categories/:title/
 collections:
   research:
+    label: "Research"
+    relative_directory: "research"
     output: true
   thoughts:
+    label: "Thoughts"
+    relative_directory: "thoughts/"
     output: true
 
 version: v1.2.0
