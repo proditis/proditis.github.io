@@ -6,8 +6,9 @@ layout: default
 
   <h1>{{ page.title }}</h1>
   <div id="table-of-contents">
+    {% toc %}
   </div>
   <div class="entry">
-    {{ content | toc }}
+    {{ content }}
   </div>
 </article>
