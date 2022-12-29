@@ -4,12 +4,8 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+Hi there, I am Pantelis or most commonly known databus, a unix geek with particular interests in cybersecurity and openbsd.
 
-### More Information
+I am the core developer of echoCTF.RED framework and platform and as such i spend most of my time developing vulnerable scenarios.
 
-A place to include any other types of information that you'd like to include about yourself.
-
-### Contact me
-
-[email@domain.com](mailto:email@domain.com)
+One could say that I like to develop the best hackable machines :D
