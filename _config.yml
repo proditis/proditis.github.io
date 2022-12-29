@@ -11,6 +11,12 @@ footer-links:
 url: https://proditis.github.io
 baseurl: ""
 #permalink: /:title/
+collections:
+  research:
+    output: true
+  thoughts:
+    output: true
+
 version: v1.2.0
 kramdown:
   input: GFM
