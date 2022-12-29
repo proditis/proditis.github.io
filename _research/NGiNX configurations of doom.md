@@ -1,8 +1,9 @@
 ---
-layout: post
+layout: research
 title: NGiNX configurations of doom
 category: research
 date: 23/11/2021
+toc: true
 tags:
   - WIP
   - research
@@ -13,7 +14,6 @@ tags:
 
 This document will serve as the log for researching various NGiNX configurations, how they can be avoided and how they can me leveraged from an offensive security standpoint -- and in the mean time maybe create a couple of targets for echoCTF.RED 😆
 
-
 ## Accessing `internal` blocks
 These blocks define rules that a given location can only be used for internal requests. For external requests, the client error `404 (Not Found)` is returned. Internal requests are the following:
 * requests redirected by the `error_page`, `index`, `random_index`, and `try_files` directives;
@@ -23,6 +23,7 @@ These blocks define rules that a given location can only be used for internal re
 
 
 By using the `X-Accel-Redirect` response header, we can make Nginx redirect internally to serve another config block, even ones marked with the internal directive:
+
 ```nginx
 location /internal_only/ {
     internal;
@@ -54,7 +55,7 @@ This is particularly useful in order to make sure `locations` keep on matching f
 However, what the documentation does not make clear is that your request is not going to be normalized. This compression only happens internally with nginx and is used to match locations and other regular expressions associated with the request.
 
 A live example from a similar bug we had caused error 500 to be produced if a URL like this was requested `https://echoctf.red//some/some/index.php?a=a&b=b`, by messing up the request and root path.  The vulnerable snippet looked like this
-```
+```nginx
 location / {
   index index.html index.php;
   try_files $uri $uri/ /index.php$is_args$args;
@@ -92,13 +93,13 @@ Well to that I say:
 ### Exploiting HTTP Splitting with cloud storage
 One configuration you could do (hint: **don’t**) might look like this:
 
-```
+```nginx
 location ~ /docs/(\[^/\]\*/\[^/\]\*)? {
     proxy_pass https://bucket.s3.amazonaws.com/docs-website/$1.html;
 }
 ```
 **or**
-```
+```nginx
 location ~ /images([0-9]+)/([^\s]+) {
     proxy_pass https://s3.amazonaws.com/companyname-images$1/$2;
 }
@@ -156,7 +157,7 @@ Host: bucket.s3.amazonaws.com
 
 ## Alias traversal
 [[alias_traversal] Path traversal via misconfigured alias](https://github.com/yandex/gixy/blob/master/docs/en/plugins/aliastraversal.md)
-```
+```nginx
 server {
     listen   83;
     server_name  "offbyslash";
@@ -174,7 +175,7 @@ By default, when `add_header` is added to the configuration, this header is only
 
 ## HOST header request forgery
 [[host_spoofing] Request's Host header forgery](https://github.com/yandex/gixy/blob/master/docs/en/plugins/hostspoofing.md)
-```
+```nginx
 server {
     listen   81;
     server_name  "backend";
@@ -191,7 +192,7 @@ NGiNX between v0.7.0 ~ v1.20 has had the silly idea to allow 2 `HOST` headers to
 However, this "logic" was not propagated across the code base and led to problems in a lot of different areas. NGiNX performs any validations and checks only on the first `HOST` header and sets the internal `http_host` variable to the **second**!!! Similarly, all exported variables passed to backend application servers (eg wsgi, fastcgi etc) are being overwritten by the second host. In some cases this can lead to cache poisoning, code injections and more.
 
 ## Erroneous `root` location
-```
+```nginx
 server {
     listen   80;
     server_name  "noroot";
@@ -205,7 +206,7 @@ server {
 ```
 
 ## Missing root location
-```
+```nginx
 server {
         root /etc/nginx;
 
@@ -221,7 +222,7 @@ The root directive specifies the root folder for Nginx. In the above example, th
 A request as simple as `GET /nginx.conf` would reveal the contents of the Nginx configuration file stored in `/etc/nginx/nginx.conf`. If the root is set to `/etc`, a `GET` request to `/nginx/nginx.conf` would reveal the configuration file.
 
 ## Off-By-Slash
-```
+```nginx
 server {
         listen 80 default_server;
 
@@ -237,7 +238,7 @@ server {
 }
 ```
 With the Off-by-slash misconfiguration, it is possible to traverse one step up the path due to a missing slash. Orange Tsai made this technique well known in his Blackhat talk [“Breaking Parser Logic!”](https://i.blackhat.com/us-18/Wed-August-8/us-18-Orange-Tsai-Breaking-Parser-Logic-Take-Your-Path-Normalization-Off-And-Pop-0days-Out-2.pdf) In this talk he showed how a missing trailing slash in the `location` directive combined with the `alias` directive can make it possible to read the source code of the web application. What is less well known is that this also works with other directives like `proxy_pass`. Let’s break down what is happening and why this works.
-```
+```nginx
 	location /api {
 			proxy_pass http://apiserver/v1/;
 	}
@@ -266,7 +267,7 @@ Some frameworks, scripts and Nginx configurations unsafely use the variables sto
 ## SCRIPT_NAME
 
 With a configuration such as the following:
-```
+```nginx
         location ~ \\.php$ {
                 include fastcgi_params;
                 fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
@@ -296,7 +297,7 @@ SCRIPT_NAME  =  /index.php/<script>alert(1)</script>/index.php
 Another misconfiguration related to Nginx variables is to use `$uri` or `$document_uri` instead of `$request_uri`. `$uri` and `$document_uri` contain the normalized URI whereas the `normalization` in Nginx includes URL decoding the URI. [Volema](http://blog.volema.com/nginx-insecurities.html#header:~:text=Case%202%3A%20rewrite%20with%20%24uri%20(%24document_uri)) found that `$uri` is commonly used when creating redirects in the Nginx configuration which results in a CRLF injection.
 
 An example of a vulnerable Nginx configuration is:
-```
+```nginx
 location / {
   return 302 https://example.com$uri;
 }
@@ -335,7 +336,7 @@ def application(environ, start_response):
    return \[b"Secret info, should not be visible!"\]
 ```
 And with the following directives in Nginx:
-```
+```nginx
 http {
    error_page 500 /html/error.html;
    proxy_intercept_errors on;
@@ -373,7 +374,7 @@ Secret info, should not be visible!
 
 ### Controlling `proxy_pass` host
 In some setups, a matching path is used as part of the hostname to proxy the request to such as the following examples.
-```
+```nginx
 location /backend {
   proxy_pass http://$host; # To repeat: don't do this!
 }
@@ -389,37 +390,37 @@ Since the bucket is attacker controlled (part of the URI path), this leads to XS
 
 ### Accessing HTTP speaking sockets (`.sock`)
 The proxy_pass feature in Nginx supports proxying requests to local unix sockets. What might be surprising is that the URI given to proxy_pass can be prefixed with `http://` or as a UNIX-domain socket path specified after the word `unix` and enclosed in colons:
-```
+```nginx
 proxy_pass   http://unix:/tmp/backend.sock:/uri/;
 ```
 
 To see if this was possible, we set up a local Unix socket using `socat` and an Nginx server configured with the bug:
 
-```
+```shell
 $ socat UNIX-LISTEN:/tmp/mysocket STDOUT
 ```
 
-```
+```nginx
 location ~ /static/(.\*)/(.\*.js) {
     proxy_pass   http://$1\-example.s3.amazonaws.com/$2;
 }
 ```
 
 For this request:
-```
+```http
 GET /static/unix:%2ftmp%2fmysocket:TEST/app-1555347823-min.js HTTP/1.1
 Host: example.com
 ```
 
 The socket receives this information:
-```
+```http
 GET TEST\-example.s3.amazonaws.com/app-1555347823-min.js HTTP/1.0
 Host: localhost
 Connection: close
 ```
 
 Now, we can take this a step further. If you want the proxy_pass to follow redirects instead of reflecting it, there’s no setting for that. However, a lot of examples (hello StackOverflow) show that you could do the following (hint: don’t):
-```
+```nginx
 location ~ /images(.*) {
     proxy_intercept_errors on;
     proxy_pass   http://example.com$1;
@@ -433,7 +434,7 @@ location @handle_redirects {
 ```
 
 This basically says that if the origin host responds with status `301`, it will use the location-header and pass it into another proxy_pass inside the @handle_redirects. This means that if this sort of rewrite is made, and an open redirect exists at the origin, we control the full part of proxy_pass. This however requires the origin host to redirect when we are using the EVAL HTTPmethod, but as shown above, if we can make the request point to our malicious origin, we can make sure it will also redirect an EVAL request back to the unix-socket:
-```
+```nginx
 error_page 404 405 =301 @405;
 location @405 {
   try_files /index.php?$args /index.php?$args;
