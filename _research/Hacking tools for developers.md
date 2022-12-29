@@ -24,9 +24,9 @@ Hopefully by the end of this document/research we will also have a docker contai
 
 ## Methodology outline
 1. Static analysis of service configs and check for common (mis)configuration patterns for services utilized by our apps. This includes configuration checks for the following:
-  a. NGINX configuration files: `gixy participantUI.conf`
-  b. php.ini and php-fpm.conf (parse and check against recommended values)
-  c. MariaDB (parse and check my.cnf settings)
+    1. NGINX configuration files: `gixy participantUI.conf`
+    2. php.ini and php-fpm.conf (parse and check against recommended values)
+    3. MariaDB (parse and check my.cnf settings)
 2. Static Analysis of application source code (eg `phpcs echoCTF.RED/frontend`)
 3. Penetration Testing on each of the individual services (eg nginx, mysql, php-fpm)
 4. Penetration Testing on the application (eg the `echoCTF.RED/fronend`)
