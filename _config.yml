@@ -1,33 +1,12 @@
-#
-# This file contains configuration flags to customize your site
-#
-
-# Name of your site (displayed in the header)
 name: Pantelis Roditis
-
-# Short bio or description (displayed in the header)
-description: |
-  #blame-🤬databus
-
-# URL of your avatar or profile pic (you could use your GitHub profile pic)
+description: \#blame-🤬databus
 avatar: https://proditis.github.io/images/blacksheep-avatar.png
-
-# Includes an icon in the footer for each username you enter
 footer-links:
-   discord: https://discord.gg/usGhmRzCqB
-#  dribbble:
-#  email:
-#  facebook:
-#  flickr:
+  discord: https://discord.gg/usGhmRzCqB
   github: proditis
-#  instagram:
-#  linkedin:
-#  pinterest:
+  linkedin: pantelis-roditis-07504634
   rss: RSS
   twitter: PantelisRoditis
-  #stackoverflow: # your stackoverflow profile, e.g. "users/50476/bart-kiers"
-  #youtube: # channel/<your_long_string> or user/<user-name>
-  #googleplus: # anything in your profile username that comes after plus.google.com/
 
 
 # Enter your Disqus shortname (not your username) to enable commenting on posts
