@@ -1,5 +1,5 @@
 name: Pantelis Roditis
-description: "#blame-🤬databus"
+description: "the rumblings of a unix geekopath #blame-🤬databus"
 avatar: https://proditis.github.io/images/blacksheep-avatar.png
 footer-links:
   discord: https://discord.gg/usGhmRzCqB
@@ -11,9 +11,14 @@ footer-links:
 url: https://proditis.github.io
 baseurl: ""
 permalink: /:categories/:title/
-#include:
-#  - research
-#  - thoughts
+show_downloads: false
+github:
+  is_project_page: false
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /images/blacksheep-social.png
 
 collections:
   research:
