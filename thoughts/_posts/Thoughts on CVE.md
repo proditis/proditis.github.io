@@ -1,8 +1,12 @@
 ---
 layout: post
 title: Thoughts on CVE
-category: thoughts
 date: 17/04/2022
+tags:
+  - WIP
+  - security
+  - CVE
+  - thoughts
 ---
 
 # Thoughts on CVE
