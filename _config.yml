@@ -34,9 +34,11 @@ plugins:
   - jekyll-sitemap
   - jekyll-feed
   - jekyll-toc
+  - jemoji
 
 whitelist:
   - jekyll-toc
+  - jemoji
 
 toc:
  min_level: 1
